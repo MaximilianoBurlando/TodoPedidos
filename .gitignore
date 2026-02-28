@@ -1,0 +1,14 @@
+# Node
+node_modules/
+
+# Env files
+.env
+.env.production
+
+# Front build
+dist/
+
+# Logs
+logs
+*.log
+npm-debug.log*

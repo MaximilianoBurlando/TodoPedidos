@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUsuario } from "../services/api";
+import Button from "../components/Button";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ export default function Login() {
     <form onSubmit={handleLogin}>
       <input type="email" name="mail" placeholder="Email" required />
       <input type="password" name="password" placeholder="Contraseña" required />
-      <button type="submit">Iniciar sesión</button>
+      <Button type="submit" variant="primary">Iniciar sesión</Button>
     </form>
   );
 }

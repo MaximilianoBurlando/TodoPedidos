@@ -89,22 +89,27 @@ export async function login(req, res) {
     }
 
     const isMatch = await bcrypt.compare(password, userPassword.password);
-        const token = jwt.sign(
-          { userId: user.idUsuario },
-          process.env.JWT_SECRET,
-          { expiresIn: "0.02h" }
-    );
+    
+    if (!isMatch) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+    else{
+      const token = jwt.sign(
+        { userId: user.idUsuario },
+        process.env.JWT_SECRET,
+        { expiresIn: "0.02h" }
+      );
 
-    res.json({
-      ok: true,
-      token,
-      user: {
-        idUsuario: user.idUsuario,
-        name: user.name,
-        mail: user.mail
-      }
-    });
-
+      res.json({
+        ok: true,
+        token,
+        user: {
+          idUsuario: user.idUsuario,
+          name: user.name,
+          mail: user.mail
+        }
+      });
+    }
   } catch (error) {
     console.error("Login error:", error);
 

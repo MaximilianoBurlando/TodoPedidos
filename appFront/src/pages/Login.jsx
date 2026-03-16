@@ -1,20 +1,23 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUsuario } from "../services/api";
-import Button from "../components/Button";
+import { Button } from "../components/ui";
+import "../index.css";
 
 export default function Login() {
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
   const handleLogin = async (e) => {
+    
     e.preventDefault();
-
+    
     const mail = e.target.mail.value;
     const password = e.target.password.value;
 
     try {
+      setLoading(true);
       const data = await loginUsuario({ mail, password });
-
+      setLoading(false);
       // 🔐 Guardar token
       localStorage.setItem("token", data.token);
 
@@ -30,10 +33,13 @@ export default function Login() {
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <input type="email" name="mail" placeholder="Email" required />
-      <input type="password" name="password" placeholder="Contraseña" required />
-      <Button type="submit" variant="primary">Iniciar sesión</Button>
-    </form>
+    <div className="flex flex-col items-center justify-center gap-6 min-h-screen">
+      <form onSubmit={handleLogin}>
+        <input className="text-1xl font-bold" type="email" name="mail" placeholder="Email" required />
+        <input className="text-1xl font-bold" type="password" name="password" placeholder="Contraseña" required />
+        <Button className="text-2xl font-bold" type="submit" variant="primary" disabled={loading}>{loading ? 
+        "Ingresando..." : "Iniciar sesión"}</Button>
+      </form>
+    </div>
   );
 }

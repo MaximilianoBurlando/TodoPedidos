@@ -1,23 +1,26 @@
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button"
 
 export default function Home() {
 
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center gap-6 min-h-screen">
+    
+      <h1 className="text-4xl font-bold">TodoPedidos</h1>
 
-      <h1>TodoPedidos</h1>
-
-      <button onClick={() => navigate("/login")}>
+      <div className="flex gap-4">
+      <Button onClick={() => navigate("/login")}>
         Iniciar sesión
-      </button>
+      </Button>
 
-      <button onClick={() => navigate("/register")}>
+      <Button onClick={() => navigate("/register")}>
         Crear usuario
-      </button>
-
+      </Button>
+      </div>
     </div>
   );
 
 }
+

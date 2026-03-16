@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registrarUsuario } from "../services/api";
+import { Button } from "../components/ui";
 
 export default function Register() {
 
@@ -100,9 +101,9 @@ export default function Register() {
         onChange={(e) => setPassword2(e.target.value)}
       />
 
-      <button onClick={handleCrear}>
+      <Button onClick={handleCrear}>
         Crear
-      </button>
+      </Button>
     </div>
   );
 }

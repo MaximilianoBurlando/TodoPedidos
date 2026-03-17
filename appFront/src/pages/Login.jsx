@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUsuario } from "../services/api";
-import { Button } from "../components/ui";
+import { Button, Input } from "@/components/ui";
 import "../index.css";
 
 export default function Login() {
@@ -35,8 +35,8 @@ export default function Login() {
   return (
     <div className="flex flex-col items-center justify-center gap-6 min-h-screen">
       <form onSubmit={handleLogin}>
-        <input className="text-1xl font-bold" type="email" name="mail" placeholder="Email" required />
-        <input className="text-1xl font-bold" type="password" name="password" placeholder="Contraseña" required />
+        <Input className="text-1xl font-bold" type="email" name="mail" placeholder="Email" required />
+        <Input className="text-1xl font-bold" type="password" name="password" placeholder="Contraseña" required />
         <Button className="text-2xl font-bold" type="submit" variant="primary" disabled={loading}>{loading ? 
         "Ingresando..." : "Iniciar sesión"}</Button>
       </form>

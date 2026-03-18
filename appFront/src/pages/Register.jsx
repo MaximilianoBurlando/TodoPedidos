@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registrarUsuario } from "../services/api";
-import { Button } from "../components/ui";
+import { Badge, Button, Card, 
+    Dialog, Input, Select, Table } from "@/components/ui";
+import "../index.css";
 
 export default function Register() {
 
@@ -56,26 +58,26 @@ export default function Register() {
     <div>
       <h1>Crear Usuario</h1>
 
-      <input
+      <Input
         placeholder="Nombre"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
 
-      <input
+      <Input
         type="email"
         placeholder="Mail"
         value={mail}
         onChange={(e) => setMail(e.target.value)}
       />
 
-      <input
+      <Input
         placeholder="Teléfono"
         value={phoneNumber}
         onChange={(e) => setPhoneNumber(e.target.value)}
       />
 
-      <input
+      <Input
         placeholder="Dirección"
         value={address}
         onChange={(e) => setAddress(e.target.value)}
@@ -87,14 +89,14 @@ export default function Register() {
         onChange={(e) => setDescription(e.target.value)}
       />
 
-      <input
+      <Input
         type="password"
         placeholder="Contraseña"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <input
+      <Input
         type="password"
         placeholder="Repetir contraseña"
         value={password2}

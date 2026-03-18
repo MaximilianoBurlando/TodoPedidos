@@ -12,11 +12,13 @@ export default function Home() {
       <h1 className="text-4xl font-bold">TodoPedidos</h1>
 
       <div className="flex gap-4">
-      <Button onClick={() => navigate("/login")}>
+      <Button size="lg" className="h-12 px-8 text-lg font-semibold bg-blue-600 
+      hover:bg-blue-700 text-white" onClick={() => navigate("/login")}>
         Iniciar sesión
       </Button>
 
-      <Button onClick={() => navigate("/register")}>
+      <Button size="lg" className="h-12 px-8 text-lg font-semibold bg-blue-600 
+      hover:bg-blue-700 text-white" onClick={() => navigate("/register")}>
         Crear usuario
       </Button>
       </div>

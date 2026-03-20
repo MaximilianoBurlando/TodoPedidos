@@ -12,7 +12,7 @@ function Input({
       type={type}
       data-slot="input"
       className={cn(
-      "bg-white white:bg-gray-900 border-blue-500 white:border-blue-400",
+      "bg-white border border-blue-500 w-40 px-2 py-1 rounded-md",
       className
       )}
       {...props} />

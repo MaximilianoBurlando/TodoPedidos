@@ -7,7 +7,7 @@ export default function Home() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col items-center justify-center gap-6 min-h-screen">
+    <div className="home-container flex flex-col items-center justify-center gap-6 min-h-screen">
     
       <h1 className="text-4xl font-bold">TodoPedidos</h1>
 

@@ -37,7 +37,8 @@ export default function Login() {
       <form onSubmit={handleLogin}>
         <Input className="text-1xl font-bold" type="email" name="mail" placeholder="Email" required />
         <Input className="text-1xl font-bold" type="password" name="password" placeholder="Contraseña" required />
-        <Button className="text-2xl font-bold" type="submit" variant="primary" disabled={loading}>{loading ? 
+        <Button size="lg" className="h-12 px-8 text-lg font-semibold bg-blue-600 
+      hover:bg-blue-700 text-white"  type="submit" variant="primary" disabled={loading}>{loading ? 
         "Ingresando..." : "Iniciar sesión"}</Button>
       </form>
     </div>

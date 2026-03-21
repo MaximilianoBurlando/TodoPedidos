@@ -38,7 +38,8 @@ export default function Login() {
           className="w-full h-full object-cover"
         />
         {/* Overlay opcional */}
-        <div className="absolute inset-0 bg-gradient-to-l from-black/50 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-l 
+        from-black/50 to-transparent"></div>
       </div>
 
     <div className="relative z-10 w-full flex items-center justify-center">
@@ -52,7 +53,8 @@ export default function Login() {
           <h2 className="text-6xl font-bold text-outline mb-4 text-center">Bienvenido</h2>
           <div className="w-[500px] flex flex-col gap-4">
           <Input
-            className="w-1/2 mx-auto  border-gray-300 focus:border-blue-500 focus:ring-blue-500 transition"
+            className="w-1/2 mx-auto  border-gray-300 focus:border-blue-500 focus:ring-blue-500 
+            transition"
             type="email"
             name="mail"
             placeholder="Email"
@@ -60,7 +62,8 @@ export default function Login() {
           />
 
           <Input
-            className="w-1/2 mx-auto  border-gray-300 focus:border-blue-500 focus:ring-blue-500 transition"
+            className="w-1/2 mx-auto  border-gray-300 focus:border-blue-500 focus:ring-blue-500 
+            transition"
             type="password"
             name="password"
             placeholder="Contraseña"
@@ -69,7 +72,8 @@ export default function Login() {
 
           <Button
             size="lg"
-            className="h-12 px-8 text-lg font-semibold bg-blue-600 hover:bg-blue-700 text-white transition-all"
+            className="h-12 px-8 text-lg font-semibold bg-blue-600 hover:bg-blue-700 text-white 
+            transition-all"
             type="submit"
             variant="primary"
             disabled={loading}
@@ -81,7 +85,8 @@ export default function Login() {
           text-sm mt-4 px-4 py-2 rounded-lg inline-block">
                 ¿No tienes cuenta?{" "}
                 <span
-                  className="text-[#2563eb] underline cursor-pointer hover:text-blue-400 transition"
+                  className="text-[#2563eb] underline cursor-pointer 
+                  hover:text-blue-400 transition"
                   onClick={() => navigate("/register")}
                 >
                   Registrarse

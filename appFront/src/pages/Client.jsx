@@ -5,6 +5,8 @@ import {
   actualizarClient,
   eliminarClient
 } from "../services/api";
+import { Button, Input } from "@/components/ui";
+import "../index.css";
 
 export default function Clients() {
   const [clients, setClients] = useState([]);
@@ -71,35 +73,112 @@ export default function Clients() {
   };
 
   return (
-    <div>
-      <h2>Clientes</h2>
+    <div className="min-h-screen bg-gray-50 p-6">
 
-      <form onSubmit={handleSubmit}>
-        <input name="name" placeholder="Nombre" value={form.name} onChange={handleChange} required />
-        <input name="description" placeholder="Descripción" value={form.description} onChange={handleChange} />
-        <input name="phoneNumber" placeholder="Teléfono" value={form.phoneNumber} onChange={handleChange} />
-        <input name="address" placeholder="Dirección" value={form.address} onChange={handleChange} />
-        <input name="reputation" placeholder="Reputación" value={form.reputation} onChange={handleChange} />
-        <button type="submit">{editingId ? "Actualizar cliente" : "Crear cliente"}</button>
-        {editingId && <button type="button" onClick={() => { setEditingId(null); setForm({ name: "", description: "", phoneNumber: "", address: "", reputation: "" }); }}>Cancelar</button>}
-      </form>
+      <div className="max-w-5xl mx-auto space-y-8">
 
-      <hr />
+        {/* HEADER */}
+        <h2 className="text-3xl font-semibold text-gray-800">
+          Gestión de clientes
+        </h2>
 
-      <h3>Lista de clientes</h3>
-      <ul>
-        {clients.map(c => (
-          <li key={c.idClient}>
-            <strong>{c.name}</strong><br />
-            {c.description}<br />
-            Tel: {c.phoneNumber}<br />
-            Dirección: {c.address}<br />
-            Reputación: {c.reputation}<br />
-            <button onClick={() => handleEdit(c)}>Editar</button>
-            <button onClick={() => handleDelete(c.idClient)}>Eliminar</button>
-          </li>
-        ))}
-      </ul>
+        {/* FORM */}
+        <div className="bg-white rounded-xl shadow-md p-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+              <Input
+                name="name"
+                placeholder="Nombre"
+                value={form.name}
+                onChange={handleChange}
+                required
+              />
+
+              <Input
+                name="phoneNumber"
+                placeholder="Teléfono"
+                value={form.phoneNumber}
+                onChange={handleChange}
+              />
+
+              <Input
+                name="address"
+                placeholder="Dirección"
+                value={form.address}
+                onChange={handleChange}
+              />
+
+              <Input
+                name="reputation"
+                placeholder="Reputación"
+                value={form.reputation}
+                onChange={handleChange}
+              />
+
+              {/* DESCRIPCIÓN FULL WIDTH */}
+              <Input
+                name="description"
+                placeholder="Descripción"
+                value={form.description}
+                onChange={handleChange}
+                className="md:col-span-2"
+              />
+
+            </div>
+
+            <div className="flex gap-3">
+              <Button type="submit">
+                {editingId ? "Actualizar cliente" : "Crear cliente"}
+              </Button>
+
+              {editingId && (
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => {
+                    setEditingId(null);
+                    setForm({ name: "", description: "", phoneNumber: "", address: "", reputation: "" });
+                  }}
+                >
+                  Cancelar
+                </Button>
+              )}
+            </div>
+
+          </form>
+        </div>
+
+        {/* LISTA DE CLIENTES */}
+        <div className="bg-white rounded-xl shadow-md p-6">
+          <h3 className="text-xl font-semibold mb-4">
+            Lista de clientes
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {clients.map((c) => (
+              <div key={c.idClient} className="border rounded-lg p-4 flex flex-col justify-between">
+
+                <div>
+                  <h4 className="font-semibold text-lg">{c.name}</h4>
+                  <p className="text-sm text-gray-500 mb-2">{c.description}</p>
+                  <p className="text-sm">📞 {c.phoneNumber}</p>
+                  <p className="text-sm text-gray-600">📍 {c.address}</p>
+                  <p className="text-sm text-gray-500">⭐ {c.reputation}</p>
+                </div>
+
+                <div className="flex gap-2 mt-4">
+                  <Button onClick={() => handleEdit(c)}>Editar</Button>
+                  <Button onClick={() => handleDelete(c.idClient)}>Eliminar</Button>
+                </div>
+
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
     </div>
   );
 }

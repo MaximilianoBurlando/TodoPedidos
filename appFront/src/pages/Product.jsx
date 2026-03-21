@@ -6,6 +6,8 @@ import {
   eliminarProduct,
   obtenerProviders
 } from "../services/api";
+import { Button, Input } from "@/components/ui";
+import "../index.css";
 
 export default function Products() {
 
@@ -111,113 +113,174 @@ export default function Products() {
   };
 
   return (
-    <div>
-      <h2>Productos</h2>
+    <div className="min-h-screen bg-gray-50 p-6">
 
-      <form onSubmit={handleSubmit}>
-        <input
-          name="title"
-          placeholder="Nombre"
-          value={form.title}
-          onChange={handleChange}
-          required
-        />
+      <div className="max-w-5xl mx-auto space-y-8">
 
-        <input
-          name="description"
-          placeholder="Descripción"
-          value={form.description}
-          onChange={handleChange}
-        />
+        {/* HEADER */}
+        <h2 className="text-3xl font-semibold text-gray-800">
+          Gestión de productos
+        </h2>
 
-        <input
-          name="price"
-          type="number"
-          step="0.01"
-          placeholder="Precio"
-          value={form.price}
-          onChange={handleChange}
-        />
+        {/* FORM */}
+        <div className="bg-white rounded-xl shadow-md p-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
 
-        <input
-          name="units"
-          type="number"
-          placeholder="Unidades por pack"
-          value={form.units}
-          onChange={handleChange}
-        />
+            {/* GRID */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-        <input
-          name="unitType"
-          placeholder="Tipo de unidad (kg, caja, etc)"
-          value={form.unitType}
-          onChange={handleChange}
-        />
+              <Input
+                name="title"
+                placeholder="Nombre"
+                value={form.title}
+                onChange={handleChange}
+                required
+              />
 
-        <input
-          name="quantityAvailable"
-          type="number"
-          placeholder="Stock disponible"
-          value={form.quantityAvailable}
-          onChange={handleChange}
-        />
+              <Input
+                name="price"
+                type="number"
+                step="0.01"
+                placeholder="Precio"
+                value={form.price}
+                onChange={handleChange}
+              />
 
-        <select
-          name="provider_idProvider"
-          value={form.provider_idProvider}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Seleccionar proveedor</option>
-          {providers.map((p) => (
-            <option key={p.idProvider} value={p.idProvider}>
-              {p.title}
-            </option>
-          ))}
-        </select>
+              <Input
+                name="units"
+                type="number"
+                placeholder="Unidades por pack"
+                value={form.units}
+                onChange={handleChange}
+              />
 
-        <button type="submit">
-          {editingId ? "Actualizar producto" : "Crear producto"}
-        </button>
+              <Input
+                name="quantityAvailable"
+                type="number"
+                placeholder="Stock disponible"
+                value={form.quantityAvailable}
+                onChange={handleChange}
+              />
 
-        {editingId && (
-          <button
-            type="button"
-            onClick={() => {
-              setEditingId(null);
-              setForm({
-                title: "",
-                description: "",
-                price: "",
-                units: "",
-                unitType: "",
-                quantityAvailable: "",
-                provider_idProvider: ""
-              });
-            }}
-          >
-            Cancelar
-          </button>
-        )}
-      </form>
+              <Input
+                name="unitType"
+                placeholder="Tipo (kg, caja, etc)"
+                value={form.unitType}
+                onChange={handleChange}
+              />
 
-      <hr />
+              {/* SELECT */}
+              <select
+                name="provider_idProvider"
+                value={form.provider_idProvider}
+                onChange={handleChange}
+                required
+                className="border rounded-md p-2"
+              >
+                <option value="">Seleccionar proveedor</option>
+                {providers.map((p) => (
+                  <option key={p.idProvider} value={p.idProvider}>
+                    {p.title}
+                  </option>
+                ))}
+              </select>
 
-      <h3>Lista de productos</h3>
+              {/* DESCRIPCIÓN FULL */}
+              <Input
+                name="description"
+                placeholder="Descripción"
+                value={form.description}
+                onChange={handleChange}
+                className="md:col-span-2"
+              />
 
-      <ul>
-        {products.map((p) => (
-          <li key={p.idProduct}>
-            <strong>{p.title}</strong><br />
-            {p.description}<br />
-            Precio: ${p.price}<br />
-            Stock: {p.quantityAvailable} {p.unitType}<br />
-            Proveedor: {p.providerName}<br />
-            <button onClick={() => handleEdit(p)}>Editar</button>
-            <button onClick={() => handleDelete(p.idProduct)}>Eliminar</button>
-          </li>
-        ))}
-      </ul>
+            </div>
+
+            {/* BOTONES */}
+            <div className="flex gap-3">
+              <Button type="submit">
+                {editingId ? "Actualizar producto" : "Crear producto"}
+              </Button>
+
+              {editingId && (
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => {
+                    setEditingId(null);
+                    setForm({
+                      title: "",
+                      description: "",
+                      price: "",
+                      units: "",
+                      unitType: "",
+                      quantityAvailable: "",
+                      provider_idProvider: ""
+                    });
+                  }}
+                >
+                  Cancelar
+                </Button>
+              )}
+            </div>
+
+          </form>
+        </div>
+
+        {/* LISTA */}
+        <div className="bg-white rounded-xl shadow-md p-6">
+          <h3 className="text-xl font-semibold mb-4">
+            Lista de productos
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            {products.map((p) => (
+              <div
+                key={p.idProduct}
+                className="border rounded-lg p-4 flex flex-col justify-between"
+              >
+
+                <div>
+                  <h4 className="font-semibold text-lg">
+                    {p.title}
+                  </h4>
+
+                  <p className="text-sm text-gray-500 mb-2">
+                    {p.description}
+                  </p>
+
+                  <p className="text-sm">
+                    💲 <strong>${p.price}</strong>
+                  </p>
+
+                  <p className="text-sm text-gray-600">
+                    📦 {p.quantityAvailable} {p.unitType}
+                  </p>
+
+                  <p className="text-sm text-gray-500">
+                    Proveedor: {p.providerName}
+                  </p>
+                </div>
+
+                {/* ACCIONES */}
+                <div className="flex gap-2 mt-4">
+                  <Button onClick={() => handleEdit(p)}>
+                    Editar
+                  </Button>
+
+                  <Button onClick={() => handleDelete(p.idProduct)}>
+                    Eliminar
+                  </Button>
+                </div>
+
+              </div>
+            ))}
+
+          </div>
+        </div>
+
+      </div>
     </div>
   );
 }

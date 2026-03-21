@@ -5,12 +5,12 @@ import {
   actualizarProvider,
   eliminarProvider
 } from "../services/api";
+import { Button, Input } from "@/components/ui";
+import "../index.css";
 
 export default function Providers() {
-
   const [providers, setProviders] = useState([]);
   const [editingId, setEditingId] = useState(null);
-
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -19,9 +19,7 @@ export default function Providers() {
     reputation: ""
   });
 
-  useEffect(() => {
-    cargarProviders();
-  }, []);
+  useEffect(() => { cargarProviders(); }, []);
 
   const cargarProviders = async () => {
     try {
@@ -33,18 +31,11 @@ export default function Providers() {
     }
   };
 
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
-    });
-  };
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-
       if (editingId) {
         await actualizarProvider(editingId, form);
         setEditingId(null);
@@ -52,16 +43,8 @@ export default function Providers() {
         await crearProvider(form);
       }
 
-      setForm({
-        title: "",
-        description: "",
-        phoneNumber: "",
-        address: "",
-        reputation: ""
-      });
-
+      setForm({ title: "", description: "", phoneNumber: "", address: "", reputation: "" });
       cargarProviders();
-
     } catch (error) {
       console.error(error);
       alert("Error guardando proveedor");
@@ -76,13 +59,11 @@ export default function Providers() {
       address: provider.address,
       reputation: provider.reputation
     });
-
     setEditingId(provider.idProvider);
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm("¿Seguro que querés eliminar este proveedor?")) return;
-
     try {
       await eliminarProvider(id);
       cargarProviders();
@@ -93,92 +74,106 @@ export default function Providers() {
   };
 
   return (
-    <div>
-      <h2>Proveedores</h2>
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-5xl mx-auto space-y-8">
 
-      <form onSubmit={handleSubmit}>
-        <input
-          name="title"
-          placeholder="Nombre"
-          value={form.title}
-          onChange={handleChange}
-          required
-        />
+        {/* HEADER */}
+        <h2 className="text-3xl font-semibold text-gray-800">Gestión de Proveedores</h2>
 
-        <input
-          name="description"
-          placeholder="Descripción"
-          value={form.description}
-          onChange={handleChange}
-        />
+        {/* FORM */}
+        <div className="bg-white rounded-xl shadow-md p-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
 
-        <input
-          name="phoneNumber"
-          placeholder="Teléfono"
-          value={form.phoneNumber}
-          onChange={handleChange}
-        />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-        <input
-          name="address"
-          placeholder="Dirección"
-          value={form.address}
-          onChange={handleChange}
-        />
+              <Input
+                name="title"
+                placeholder="Nombre"
+                value={form.title}
+                onChange={handleChange}
+                required
+              />
 
-        <input
-          name="reputation"
-          placeholder="Reputación"
-          value={form.reputation}
-          onChange={handleChange}
-        />
+              <Input
+                name="phoneNumber"
+                placeholder="Teléfono"
+                value={form.phoneNumber}
+                onChange={handleChange}
+              />
 
-        <button type="submit">
-          {editingId ? "Actualizar proveedor" : "Crear proveedor"}
-        </button>
+              <Input
+                name="address"
+                placeholder="Dirección"
+                value={form.address}
+                onChange={handleChange}
+              />
 
-        {editingId && (
-          <button
-            type="button"
-            onClick={() => {
-              setEditingId(null);
-              setForm({
-                title: "",
-                description: "",
-                phoneNumber: "",
-                address: "",
-                reputation: ""
-              });
-            }}
-          >
-            Cancelar
-          </button>
-        )}
-      </form>
+              <Input
+                name="reputation"
+                placeholder="Reputación"
+                value={form.reputation}
+                onChange={handleChange}
+              />
 
-      <hr />
+              <Input
+                name="description"
+                placeholder="Descripción"
+                value={form.description}
+                onChange={handleChange}
+                className="md:col-span-2"
+              />
 
-      <h3>Lista de proveedores</h3>
+            </div>
 
-      <ul>
-        {providers.map((p) => (
-          <li key={p.idProvider}>
-            <strong>{p.title}</strong> <br />
-            {p.description} <br />
-            Tel: {p.phoneNumber} <br />
-            Dirección: {p.address} <br />
-            Reputación: {p.reputation} <br />
+            <div className="flex gap-3">
+              <Button type="submit">
+                {editingId ? "Actualizar proveedor" : "Crear proveedor"}
+              </Button>
 
-            <button onClick={() => handleEdit(p)}>
-              Editar
-            </button>
+              {editingId && (
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => {
+                    setEditingId(null);
+                    setForm({ title: "", description: "", phoneNumber: "", address: "", reputation: "" });
+                  }}
+                >
+                  Cancelar
+                </Button>
+              )}
+            </div>
 
-            <button onClick={() => handleDelete(p.idProvider)}>
-              Eliminar
-            </button>
-          </li>
-        ))}
-      </ul>
+          </form>
+        </div>
+
+        {/* LISTA DE PROVEEDORES */}
+        <div className="bg-white rounded-xl shadow-md p-6">
+          <h3 className="text-xl font-semibold mb-4">Lista de proveedores</h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {providers.map((p) => (
+              <div key={p.idProvider} className="border rounded-lg p-4 flex flex-col justify-between">
+
+                <div>
+                  <h4 className="font-semibold text-lg">{p.title}</h4>
+                  <p className="text-sm text-gray-500 mb-2">{p.description}</p>
+                  <p className="text-sm">📞 {p.phoneNumber}</p>
+                  <p className="text-sm text-gray-600">📍 {p.address}</p>
+                  <p className="text-sm text-gray-500">⭐ {p.reputation}</p>
+                </div>
+
+                <div className="flex gap-2 mt-4">
+                  <Button onClick={() => handleEdit(p)}>Editar</Button>
+                  <Button onClick={() => handleDelete(p.idProvider)}>Eliminar</Button>
+                </div>
+
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
     </div>
   );
 }

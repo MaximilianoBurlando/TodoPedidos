@@ -7,6 +7,8 @@ import {
   obtenerClients,
   obtenerProducts
 } from "../services/api";
+import { Button, Input } from "@/components/ui";
+import "../index.css";
 
 export default function Orders() {
 
@@ -183,128 +185,180 @@ export default function Orders() {
   };
   
   return (
-    <div>
-      <h2>Pedidos</h2>
+    <div className="min-h-screen bg-gray-50 p-6">
 
-      <form onSubmit={handleSubmit}>
-        <input
-          name="deliveryAddress"
-          placeholder="Dirección"
-          value={form.deliveryAddress}
-          onChange={handleChange}
-          required
-        />
+      <div className="max-w-5xl mx-auto space-y-8">
 
-        <input
-          name="title"
-          placeholder="Título"
-          value={form.title}
-          onChange={handleChange}
-          required
-        />
+        {/* HEADER */}
+        <h2 className="text-3xl font-semibold text-gray-800">
+          Gestión de pedidos
+        </h2>
 
-        <input
-          type="date"
-          name="date"
-          value={form.date}
-          onChange={handleChange}
-          required
-        />
+        {/* FORMULARIO */}
+        <div className="bg-white rounded-xl shadow-md p-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
 
-        <input
-          name="note"
-          placeholder="Nota"
-          value={form.note}
-          onChange={handleChange}
-        />
+            {/* GRID INPUTS */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-        <input
-          name="state"
-          placeholder="Estado"
-          value={form.state}
-          onChange={handleChange}
-          required
-        />
-
-        {/* 🔵 SELECT CLIENTE */}
-        <select
-          name="client_idClient"
-          value={form.client_idClient}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Seleccionar cliente</option>
-          {clients.map(c => (
-            <option key={c.idClient} value={c.idClient}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-
-        <hr />
-
-        <h4>Productos</h4>
-
-        {products.map(p => (
-          <div key={p.idProduct}>
-            <label>
-              <input
-                type="checkbox"
-                onChange={() => toggleProduct(p)}
-                checked={selectedProducts.some(sp => sp.product_idProduct === p.idProduct)}
+              <Input
+                name="deliveryAddress"
+                placeholder="Dirección"
+                value={form.deliveryAddress}
+                onChange={handleChange}
+                required
               />
-              {p.title} (${p.price})
-            </label>
 
-            {selectedProducts.some(sp => sp.product_idProduct === p.idProduct) && (
-              <input
-                type="number"
-                min="1"
-                value={
-                  selectedProducts.find(sp => sp.product_idProduct === p.idProduct)?.quantity
-                }
-                onChange={(e) => changeQuantity(p.idProduct, e.target.value)}
+              <Input
+                name="title"
+                placeholder="Título"
+                value={form.title}
+                onChange={handleChange}
+                required
               />
-            )}
-          </div>
-        ))}
 
-        <button type="submit">
-          {editingId ? "Actualizar pedido" : "Crear pedido"}
-        </button>
-      </form>
+              <Input
+                type="date"
+                name="date"
+                value={form.date}
+                onChange={handleChange}
+                required
+              />
 
-      <hr />
+              <Input
+                name="state"
+                placeholder="Estado"
+                value={form.state}
+                onChange={handleChange}
+                required
+              />
 
-      <h3>Lista de pedidos</h3>
+              <Input
+                name="note"
+                placeholder="Nota"
+                value={form.note}
+                onChange={handleChange}
+                className="md:col-span-2"
+              />
 
-        <ul>
-        {orders.map(o => (
-            <li key={o.idPedido}>
-            <strong>{o.title}</strong> - {o.clientName} <br />
-            Dirección: {o.deliveryAddress} <br />
-            Fecha: {o.date} - Total: ${o.amount} <br />
-            Estado: {o.state} <br />
-
-            <strong>Productos:</strong>
-            <ul>
-                {o.products?.map(p => (
-                <li key={p.product_idProduct}>
-                    {p.title} - Cantidad: {p.quantity} - ${p.price}
-                </li>
+              {/* SELECT CLIENTE */}
+              <select
+                name="client_idClient"
+                value={form.client_idClient}
+                onChange={handleChange}
+                required
+                className="border rounded-md p-2 md:col-span-2"
+              >
+                <option value="">Seleccionar cliente</option>
+                {clients.map(c => (
+                  <option key={c.idClient} value={c.idClient}>
+                    {c.name}
+                  </option>
                 ))}
-            </ul>
+              </select>
 
-            <button onClick={() => handleEdit(o)}>
-                Editar
-            </button>
+            </div>
 
-            <button onClick={() => handleDelete(o.idPedido)}>
-                Eliminar
-            </button>
-            </li>
-        ))}
-        </ul>
+            {/* PRODUCTOS */}
+            <div>
+              <h4 className="text-lg font-medium mb-3">Productos</h4>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {products.map(p => (
+                  <div
+                    key={p.idProduct}
+                    className="flex items-center justify-between border rounded-lg p-3"
+                  >
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        onChange={() => toggleProduct(p)}
+                        checked={selectedProducts.some(sp => sp.product_idProduct === p.idProduct)}
+                      />
+                      <span className="text-sm">
+                        {p.title} (${p.price})
+                      </span>
+                    </div>
+
+                    {selectedProducts.some(sp => sp.product_idProduct === p.idProduct) && (
+                      <Input
+                        type="number"
+                        min="1"
+                        className="w-20"
+                        value={
+                          selectedProducts.find(sp => sp.product_idProduct === p.idProduct)?.quantity
+                        }
+                        onChange={(e) => changeQuantity(p.idProduct, e.target.value)}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* BOTÓN */}
+            <Button type="submit" className="w-full md:w-auto">
+              {editingId ? "Actualizar pedido" : "Crear pedido"}
+            </Button>
+
+          </form>
+        </div>
+
+        {/* LISTA */}
+        <div className="bg-white rounded-xl shadow-md p-6">
+          <h3 className="text-xl font-semibold mb-4">Lista de pedidos</h3>
+
+          <div className="space-y-4">
+            {orders.map(o => (
+              <div key={o.idPedido} className="border rounded-lg p-4">
+
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h4 className="font-semibold text-lg">{o.title}</h4>
+                    <p className="text-sm text-gray-500">{o.clientName}</p>
+                  </div>
+
+                  <span className="text-sm text-gray-600">
+                    ${o.amount}
+                  </span>
+                </div>
+
+                <p className="text-sm mt-2">
+                  📍 {o.deliveryAddress}
+                </p>
+
+                <p className="text-sm text-gray-500">
+                  📅 {o.date} — {o.state}
+                </p>
+
+                {/* PRODUCTOS */}
+                <div className="mt-3 text-sm">
+                  <strong>Productos:</strong>
+                  <ul className="list-disc ml-5">
+                    {o.products?.map(p => (
+                      <li key={p.product_idProduct}>
+                        {p.title} × {p.quantity}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* ACCIONES */}
+                <div className="flex gap-2 mt-4">
+                  <Button onClick={() => handleEdit(o)}>
+                    Editar
+                  </Button>
+                  <Button onClick={() => handleDelete(o.idPedido)}>
+                    Eliminar
+                  </Button>
+                </div>
+
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
     </div>
   );
 }
